@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        {% if title %}
+        <title>Flask Blog - {{ title }}</title>
+        {% else %}
+        <title>Flask Blog</title>
+        {% endif %}
+    </head>
+
+    <body>
+        <h1>Posts</h1>
+        {% for post in posts %}
+        <h2>Author: {{ post.author}}</h2>
+        <h3>Title: {{ post.title}}</h3>
+        <p>Content: {{ post.content}}</p>
+        <p>Date Posted: {{ post.date_posted}}</p>
+        {% endfor %}
+    </body>
+
+</html>
