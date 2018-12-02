@@ -1,5 +1,11 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
+from forms import RegistrationForm, LoginForm
+
 app = Flask(__name__)
+
+# User import secrets,
+# secrets.token_hex(16) in Python command line
+app.config['SECRET_KEY'] = 'e112fc8128eaec1d609dfc594f1fcb45'
 
 posts = [
     {
@@ -26,14 +32,28 @@ posts = [
 @app.route("/")
 @app.route("/home")
 def home():
-    data = {"title": "Home", "posts": posts} 
-    return render_template('home.html', param=data)
+    return render_template('home.html', title='Home', posts=posts)
 
 
 @app.route('/about')
 def about():
-    title = {"title": "About"}
-    return render_template('about.html', param=title)
+    return render_template('about.html', title='About')
+
+
+@app.route('/register', methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('home'))
+
+    return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
 
 
 if __name__ == "__main__":
