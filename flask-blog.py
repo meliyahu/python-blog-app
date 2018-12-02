@@ -26,12 +26,14 @@ posts = [
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    data = {"title": "Home", "posts": posts} 
+    return render_template('home.html', param=data)
 
 
 @app.route('/about')
 def about():
-    return render_template('about.html', title='About')
+    title = {"title": "About"}
+    return render_template('about.html', param=title)
 
 
 if __name__ == "__main__":
